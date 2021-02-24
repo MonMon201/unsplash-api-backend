@@ -4,18 +4,16 @@ import { createApi } from 'unsplash-js';
 
 @Injectable()
 export class UnsplashService {
-    constructor(){}
-    
-    getApi() {
-        return createApi({
-            accessKey: process.env.ACCESS_KEY,
-            fetch,
-        })
-    }
+  getApi() {
+    return createApi({
+      accessKey: process.env.ACCESS_KEY,
+      fetch,
+    });
+  }
 
-    async getPhotos(query: string) {
-        return this.getApi().search.getPhotos({
-            query,
-        })
-    }
+  async getPhotos(query: string) {
+    return this.getApi().search.getPhotos({
+      query,
+    });
+  }
 }
