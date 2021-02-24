@@ -5,14 +5,12 @@ import { UserRepository } from './repositories/user.repository';
 
 @Injectable()
 export class DbService {
-  private readonly store: DataStore = new DataStore('./store');
-  private readonly userRepository: UserRepository = new UserRepository(
-    this.store.collection<User>('users'),
-  );
+    private readonly store: DataStore = new DataStore('./store');
+    private readonly userRepository: UserRepository = new UserRepository(this.store.collection<User>('users'));
 
-  constructor() {}
+    constructor() {}
 
-  getUserRepository() {
-    return this.userRepository;
-  }
+    getUserRepository() {
+        return this.userRepository;
+    }
 }
