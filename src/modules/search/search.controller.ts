@@ -1,16 +1,17 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Body } from '@nestjs/common';
+import { PhotoDto } from './dtos/photo.dto';
+import { SearchReqDto } from './dtos/search.request.dto';
 import { SearchService } from './search.service';
 
 @Controller('search')
 export class SearchController {
     constructor(private searchService: SearchService) {}
 
-    @Get('/:item')
-    async searchItem(@Param('item') item: string): Promise<any> {
-        const photos = await this.searchService.search(item);
-        return {
-            res: `Here is response for ${item}`,
-            photos,
-        };
+    @Get('/')
+    async searchItem(@Body() searchReq: SearchReqDto): Promise<PhotoDto[]> {
+        const photos = await this.searchService.search(searchReq.userId, searchReq.query);
+        const dtos = photos.response.results.map((photo) => PhotoDto.from(photo));
+        console.log(dtos);
+        return dtos;
     }
 }

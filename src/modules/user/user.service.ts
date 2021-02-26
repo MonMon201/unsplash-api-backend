@@ -1,19 +1,34 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException } from '@nestjs/common';
+import { User } from 'src/db/models/user.type';
+import { UserRepository } from 'src/db/repositories/user.repository';
 import { DbService } from '../../db/db.service';
 
 @Injectable()
 export class UserService {
-    constructor(private DbService: DbService) {}
+    private userRepository: UserRepository;
 
-    async addUser(username: string) {
-        return this.DbService.getUserRepository().addUser(username);
+    constructor(private DbService: DbService) {
+        this.userRepository = this.DbService.getUserRepository();
     }
 
-    async getAllUsers() {
-        return this.DbService.getUserRepository().getAllUsers();
+    async addUser(username: string): Promise<User> {
+        const user = this.getUserByUsername(username);
+        if (user) {
+            throw new HttpException(`${username} username is already in use.`, 409);
+        } else {
+            return this.userRepository.addUser(username);
+        }
     }
 
-    async exists(username: string) {
-        return this.DbService.getUserRepository().exists(username);
+    async getAllUsers(): Promise<User[]> {
+        return this.userRepository.getAllUsers();
+    }
+
+    async getUserByUsername(username: string): Promise<User>{
+        return this.userRepository.getUserByUsername(username);
+    }
+
+    async exists(userId: string): Promise<User> {
+        return this.userRepository.exists(userId);
     }
 }
