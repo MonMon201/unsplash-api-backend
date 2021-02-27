@@ -1,6 +1,6 @@
 ## ATTENTION!!!
 
-DO NOT DELETE NODE_MODULES. It contains custom fixes to notarealdb module. Issue will come up soon. 
+DO NOT DELETE NODE_MODULES. It contains custom fixes to notarealdb module. Issue to it's owner will come up soon... 
 
 ## Description
 
