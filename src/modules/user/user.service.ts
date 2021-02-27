@@ -12,9 +12,9 @@ export class UserService {
     }
 
     async addUser(username: string): Promise<User> {
-        const user = this.getUserByUsername(username);
+        const user = await this.getUserByUsername(username);
         if (user) {
-            throw new HttpException(`${username} username is already in use.`, 409);
+            throw new HttpException(`Username ${username} is already in use.`, 409);
         } else {
             return this.userRepository.addUser(username);
         }
@@ -24,11 +24,15 @@ export class UserService {
         return this.userRepository.getAllUsers();
     }
 
-    async getUserByUsername(username: string): Promise<User>{
+    async getUserByid(id: string): Promise<User> {
+        return this.userRepository.getUserByid(id);
+    }
+
+    async getUserByUsername(username: string): Promise<User> {
         return this.userRepository.getUserByUsername(username);
     }
 
-    async exists(userId: string): Promise<User> {
-        return this.userRepository.exists(userId);
+    async exists(id: string): Promise<User> {
+        return this.userRepository.exists(id);
     }
 }

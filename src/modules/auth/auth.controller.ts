@@ -11,4 +11,16 @@ export class AuthController {
         const user = await this.authService.authenticate(username);
         return AuthDto.from(user);
     }
+
+    @Post('/register/:username')
+    async register(@Param('username') username: string): Promise<AuthDto> {
+        const user = await this.authService.register(username);
+        return AuthDto.from(user);
+    }
+
+    @Post('/guest')
+    async guest(): Promise<AuthDto> {
+        const guest = await this.authService.guest();
+        return AuthDto.from(guest);
+    }
 }

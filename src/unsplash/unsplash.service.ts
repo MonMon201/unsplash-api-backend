@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import fetch from 'node-fetch';
 import { createApi } from 'unsplash-js';
+import * as fs from 'fs'
 
 @Injectable()
 export class UnsplashService {
@@ -12,8 +13,10 @@ export class UnsplashService {
     }
 
     async getPhotos(query: string) {
-        return this.getApi().search.getPhotos({
+        const photos = await this.getApi().search.getPhotos({
             query,
+            perPage: 30,
         });
+        return photos;
     }
 }

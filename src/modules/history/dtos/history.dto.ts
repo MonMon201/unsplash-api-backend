@@ -8,7 +8,7 @@ export class HistoryDto {
     static from(history: History) {
         const dto = new HistoryDto();
         dto.id = history.id;
-        dto.userId = history.userId;
+        dto.id = history.id;
         dto.query = history.query;
         return dto;
     }

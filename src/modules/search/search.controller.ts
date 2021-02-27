@@ -1,17 +1,19 @@
-import { Controller, Get, Param, Body } from '@nestjs/common';
+import { Controller, Get, Param, Body, Post } from '@nestjs/common';
+import { UserService } from '../user/user.service';
 import { PhotoDto } from './dtos/photo.dto';
-import { SearchReqDto } from './dtos/search.request.dto';
+import { SearchQueryDto } from './dtos/search.query.dto';
 import { SearchService } from './search.service';
+import { UserGuestValidationService } from '../user/validation-service/user-guest-validation.service';
 
 @Controller('search')
 export class SearchController {
-    constructor(private searchService: SearchService) {}
+    constructor(private searchService: SearchService, private userGuestValidationService: UserGuestValidationService) {}
 
-    @Get('/')
-    async searchItem(@Body() searchReq: SearchReqDto): Promise<PhotoDto[]> {
-        const photos = await this.searchService.search(searchReq.userId, searchReq.query);
-        const dtos = photos.response.results.map((photo) => PhotoDto.from(photo));
-        console.log(dtos);
+    @Post('/:userId')
+    async searchItem(@Param('userId') userId: string, @Body() searchReq: SearchQueryDto): Promise<PhotoDto[]> {
+        console.log(searchReq, userId);
+        const photos = await this.searchService.search(userId, searchReq.query);
+        const dtos = photos.map((photo) => PhotoDto.from(photo));
         return dtos;
     }
 }

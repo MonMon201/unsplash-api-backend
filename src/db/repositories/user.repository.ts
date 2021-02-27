@@ -6,16 +6,24 @@ import { User } from '../models/user.type';
 export class UserRepository {
     constructor(private userCollection: Collection<User>) {}
 
-    addUser(username: string): User {
-        const userId = this.userCollection.create({ username });
+    async addUser(username: string): Promise<User> {
+        const id = this.userCollection.create({ username });
+        return this.userCollection.get(id);
+    }
+
+    async getUserByid(userId: string): Promise<User> {
         return this.userCollection.get(userId);
     }
 
-    exists(username: string): boolean {
-        return !!this.userCollection.list().filter((user) => user.username === username);
+    async getUserByUsername(username: string): Promise<User> {
+        return this.userCollection.list().filter((user) => user.username === username)[0];
     }
 
-    getAllUsers(): User[] {
+    async exists(id: string): Promise<User> {
+        return await this.userCollection.get(id);
+    }
+
+    async getAllUsers(): Promise<User[]> {
         return this.userCollection.list();
     }
 }

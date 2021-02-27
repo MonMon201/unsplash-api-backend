@@ -1,33 +1,35 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, HttpException, Injectable } from '@nestjs/common';
 import { DbService } from 'src/db/db.service';
 import { HistoryRepository } from 'src/db/repositories/history.repository';
-import { ApiResponse } from 'unsplash-js/dist/helpers/response';
-import { Photos } from 'unsplash-js/dist/methods/search/types/response';
 import { UnsplashService } from '../../unsplash/unsplash.service';
-import { History } from '../../db/models/history.type'
-import { Photo } from './types/photo.type';
+import { Photo } from './types/photo';
+import { HistoryService } from '../history/history.service';
 
 @Injectable()
 export class SearchService {
-    private historyRepository: HistoryRepository;
-    constructor(
-        private unsplashService: UnsplashService,
-        private dbService: DbService
-        ) {
-            this.historyRepository = this.dbService.getHistoryRepository();
-        }
+    constructor(private unsplashService: UnsplashService, private historyService: HistoryService) {}
 
-    async search(userId: string, query: string): Promise<ApiResponse<Photos>> {
-        const photos = await this.unsplashService.getPhotos(query);
-        const historyPhotos: Photo[] = photos.response.results.map((photo) => {
-            return {
-                id: photo.id,
-                urls: {
-                    regular: photo.urls.regular,
-                },
+    async search(userId: string, query: string): Promise<Photo[]> {
+        if(query.length){
+            const history = await this.historyService.getHistoryByQuery(query);
+            if (history) {
+                console.log('Loaded from db');
+                return history.photos;
+            } else{
+                const payload = await this.unsplashService.getPhotos(query);
+                const photos = payload.response.results.map((photo) => {
+                    return {
+                        id: photo.id,
+                        urls: {
+                            regular: photo.urls.regular,
+                        },
+                    };
+                });
+                await this.historyService.addHistory(userId, query, photos);
+                return photos;
             }
-        })
-        await this.historyRepository.addToHistory(userId, query, historyPhotos);
-        return photos;
+        } else {
+            throw new BadRequestException(`Request is empty`)
+        }
     }
 }
