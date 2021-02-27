@@ -12,6 +12,11 @@ DO NOT DELETE NODE_MODULES. It contains custom fixes to notarealdb module. Issue
 $ npm i
 ```
 
+## Set up
+Copy environment variables and file in .env file
+
+$ cp .env.example .env
+
 ## Running the app
 
 ```bash
