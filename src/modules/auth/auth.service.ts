@@ -9,11 +9,15 @@ export class AuthService {
 
     async authenticate(username: string, authReq: AuthDto): Promise<User> {
         if (authReq.username === process.env.GUEST) {
-            const user = await this.userService.getUserByUsername(username);
-            if (user) {
-                return this.userService.getUserByUsername(username);
+            if(username !== process.env.GUEST){
+                const user = await this.userService.getUserByUsername(username);
+                if (user) {
+                    return this.userService.getUserByUsername(username);
+                } else {
+                    throw new HttpException(`${username} doesn't exists.`, 401);
+                }
             } else {
-                throw new HttpException(`${username} doesn't exists.`, 401);
+                throw new HttpException(`Can't login as Guest`, 403);
             }
         } else {
             throw new HttpException(`You are already logged in`, 403);
