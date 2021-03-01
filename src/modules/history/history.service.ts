@@ -14,11 +14,8 @@ export class HistoryService {
     }
 
     async getUsersHistoriesByUsersId(userId: string): Promise<History[]> {
-        if (await this.historyRepository.exists(userId)) {
-            return this.historyRepository.getUsersHistoriesByUsersId(userId);
-        } else {
-            return [];
-        }
+        const exists = await this.historyRepository.exists(userId);
+        return exists ? this.historyRepository.getUsersHistoriesByUsersId(userId) : [];
     }
 
     async getHistoryByQuery(query: string): Promise<History> {
