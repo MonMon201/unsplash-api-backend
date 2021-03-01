@@ -14,11 +14,16 @@ $ npm i
 ```
 
 ## Set up
-Copy environment variables and fill in a .env file
+1. Copy environment variables and fill in a .env file
 
 ```bash
 $ cp .env.example .env
 ```
+
+2. Switch notarealdb
+
+2. 1. Delete node_modules/notarealdb
+2. 2. replace it with ./notarealdb
 
 ## Running the app
 
@@ -43,6 +48,6 @@ stored in the file, but instance B won't check it.
 My custom fix solves this trouble.
 If you would like, you could delete my custom fix, to install a Notarealdb module and to how is it going. 
 
-[original]()
+[original](https://github.com/MonMon201/unsplash-api-backend/blob/master/description/original.png)
 
-[modified]()
+[modified](https://github.com/MonMon201/unsplash-api-backend/blob/master/description/modified.png)
