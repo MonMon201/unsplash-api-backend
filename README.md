@@ -13,7 +13,7 @@ $ npm i
 ```
 
 ## Set up
-Copy environment variables and file in .env file
+Copy environment variables and fill in a .env file
 
 ```bash
 $ cp .env.example .env
