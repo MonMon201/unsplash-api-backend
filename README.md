@@ -5,6 +5,24 @@ Explanation why it so is below the guidline.
 
 ## Description
 
+With this application you can:
+* Use a guest account to:
+    * Search pictures
+    * Like pictures
+    * To see the browsing history
+    * To login with username
+    * To signup with username
+* Use a user's account to:
+    * Search pictures
+    * Like pictures
+    * To see the browsing history
+    * To logout
+
+Features:
+* Likes save their state on different user accounts
+* All photos from queries are written to the history to avoid a query duplication
+* History saves personal history of every user, but if user makes a query, the system will look through all history to make sure this query hasn't been done before.
+
 [Unsplash](https://unsplash.com/) Api application. Backend part.
 
 ## Installation
