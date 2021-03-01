@@ -1,6 +1,7 @@
 ## ATTENTION!!!
 
 DO NOT DELETE NODE_MODULES. It contains custom fixes to notarealdb module. Issue to it's owner will come up soon... 
+Explanation why it so is below the guidline.
 
 ## Description
 
@@ -28,3 +29,20 @@ $ npm run start
 # watch mode
 $ npm run start:dev
 ```
+
+## Explanation
+
+In the original version there is no load() method used to update state of the "db". 
+Due to this fact, there is a possibility to have in RAM two different states.
+So that leads to the situation, when, for example:
+We have states A and B.
+We add a search request to history of instance A.
+And It won't appear in history of instance B, due two the fact, that changes are
+stored in the file, but instance B won't check it.
+
+My custom fix solves this trouble.
+If you would like, you could delete my custom fix, to install a Notarealdb module and to how is it going. 
+
+[original]()
+
+[modified]()
