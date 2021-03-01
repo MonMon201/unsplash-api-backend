@@ -1,7 +1,7 @@
 ## Attention!
 
 Notarealdb folder contains custom fixes to notarealdb module. Issue to it's owner will come up soon... 
-Explanation why it so is below the guidline.
+Explanation why is it so is below the guidline.
 
 ## Description
 
