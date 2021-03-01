@@ -1,6 +1,6 @@
-## ATTENTION!!!
+## Attention!
 
-DO NOT DELETE NODE_MODULES. It contains custom fixes to notarealdb module. Issue to it's owner will come up soon... 
+Notarealdb folder contains custom fixes to notarealdb module. Issue to it's owner will come up soon... 
 Explanation why it so is below the guidline.
 
 ## Description
@@ -22,8 +22,8 @@ $ cp .env.example .env
 
 2. Switch notarealdb
 
-2. 1. Delete node_modules/notarealdb
-2. 2. replace it with ./notarealdb
+2. 1. Go to node_modules/notarealdb
+2. 2. Move ./notarealdb with replacement to the node_modules/notarealdb to apply custom fix
 
 ## Running the app
 
