@@ -13,9 +13,9 @@ export class SearchService {
     ) {}
 
     async searchPhotos(userId: string, query: string): Promise<Photo[]> {
-        if (!query.length) {
-            throw new HttpException(`Request is empty`, 404);
-        }
+        if (!query.length)
+        throw new HttpException(`Request is empty`, 404);
+        
         const history = await this.historyService.getHistoryByQuery(query);
         return history ? this.addPhotosToHistory(userId, query, history.photos) : this.searchNewPhotos(userId, query);
     }
