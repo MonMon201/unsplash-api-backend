@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import fetch from 'node-fetch';
 import { createApi } from 'unsplash-js';
-import * as fs from 'fs'
 
 @Injectable()
 export class UnsplashService {

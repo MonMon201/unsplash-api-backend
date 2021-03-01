@@ -19,11 +19,7 @@ export class UserRepository {
         return this.userCollection.list().filter((user) => user.username === username)[0];
     }
 
-    async exists(id: string): Promise<User> {
-        return await this.userCollection.get(id);
-    }
-
-    async getAllUsers(): Promise<User[]> {
-        return this.userCollection.list();
+    async existsByName(username: string): Promise<User[]> {
+        return await this.userCollection.list().filter((user) => user.username === username);
     }
 }

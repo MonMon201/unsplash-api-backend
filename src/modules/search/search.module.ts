@@ -7,11 +7,12 @@ import { DbModule } from 'src/db/db.module';
 import { HistoryService } from '../history/history.service';
 import { HistoryModule } from '../history/history.module';
 import { UserService } from '../user/user.service';
-import { UserGuestValidationService } from '../user/validation-service/user-guest-validation.service';
+import { LikeService } from '../like/like.service';
+import { LikeModule } from '../like/like.module';
 
 @Module({
-    imports: [UnsplashModule, DbModule, HistoryModule],
+    imports: [UnsplashModule, DbModule, HistoryModule, LikeModule],
     controllers: [SearchController],
-    providers: [SearchService, DbService, HistoryService, UserService, UserGuestValidationService],
+    providers: [SearchService, DbService, HistoryService, UserService, LikeService],
 })
 export class SearchModule {}

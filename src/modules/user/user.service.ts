@@ -7,8 +7,8 @@ import { DbService } from '../../db/db.service';
 export class UserService {
     private userRepository: UserRepository;
 
-    constructor(private DbService: DbService) {
-        this.userRepository = this.DbService.getUserRepository();
+    constructor(private dbService: DbService) {
+        this.userRepository = this.dbService.getUserRepository();
     }
 
     async addUser(username: string): Promise<User> {
@@ -20,19 +20,15 @@ export class UserService {
         }
     }
 
-    async getAllUsers(): Promise<User[]> {
-        return this.userRepository.getAllUsers();
-    }
-
-    async getUserByid(id: string): Promise<User> {
-        return this.userRepository.getUserByid(id);
+    async getUserByid(userId: string): Promise<User> {
+        return this.userRepository.getUserByid(userId);
     }
 
     async getUserByUsername(username: string): Promise<User> {
         return this.userRepository.getUserByUsername(username);
     }
 
-    async exists(id: string): Promise<User> {
-        return this.userRepository.exists(id);
+    async existsByName(username: string): Promise<User[]> {
+        return this.userRepository.existsByName(username);
     }
 }

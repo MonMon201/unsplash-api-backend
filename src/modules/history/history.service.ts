@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { DbService } from 'src/db/db.service';
 import { History } from 'src/db/models/history.type';
+import { User } from 'src/db/models/user.type';
 import { HistoryRepository } from 'src/db/repositories/history.repository';
 import { Photo } from '../search/types/photo';
-import { UserService } from '../user/user.service';
 
 @Injectable()
 export class HistoryService {
@@ -13,17 +13,12 @@ export class HistoryService {
         this.historyRepository = this.dbService.getHistoryRepository();
     }
 
-    async getHistoryByid(userId: string): Promise<History[]> {
+    async getUsersHistoriesByUsersId(userId: string): Promise<History[]> {
         if (await this.historyRepository.exists(userId)) {
-            return this.historyRepository.getHistoryByid(userId);
+            return this.historyRepository.getUsersHistoriesByUsersId(userId);
         } else {
             return [];
         }
-    }
-
-    async getUsersHistoriesByUsersId(userId: string, query: string): Promise<History> {
-        const usersHistories = await this.getHistoryByid(userId);
-        return usersHistories.filter((history) => history.query === query)[0];
     }
 
     async getHistoryByQuery(query: string): Promise<History> {
@@ -31,8 +26,8 @@ export class HistoryService {
         return usersHistories.filter((history) => history.query === query)[0];
     }
 
-    async addHistory(userId: string, query: string, photos: Photo[]) {
-        const history = await this.historyRepository.addHistory(userId, query, photos);
+    async addHistory(user: User, query: string, photos: Photo[]) {
+        const history = await this.historyRepository.addHistory(user, query, photos);
         return history;
     }
 }

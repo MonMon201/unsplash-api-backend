@@ -1,35 +1,40 @@
-import { BadRequestException, HttpException, Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { User } from 'src/db/models/user.type';
-import { DbService } from '../../db/db.service';
-import { UserRepository } from '../../db/repositories/user.repository';
 import { UserService } from '../user/user.service';
+import { AuthDto } from './dtos/auth.dto';
 
 @Injectable()
 export class AuthService {
+    constructor(private userService: UserService) {}
 
-    constructor(private userService: UserService) {
-    }
-
-    async authenticate(username: string): Promise<User> {
-        const user = await this.userService.getUserByUsername(username);
-        if (user) {
-            return this.userService.getUserByUsername(username);
+    async authenticate(username: string, authReq: AuthDto): Promise<User> {
+        if (authReq.username === process.env.GUEST) {
+            const user = await this.userService.getUserByUsername(username);
+            if (user) {
+                return this.userService.getUserByUsername(username);
+            } else {
+                throw new HttpException(`${username} doesn't exists.`, 401);
+            }
         } else {
-            throw new BadRequestException(`${username} doesn't exists.`);
+            throw new HttpException(`You are already logged in`, 403);
         }
     }
 
-    async register(username: string): Promise<User> {
-        return this.userService.addUser(username);
+    async register(username: string, authReq: AuthDto): Promise<User> {
+        if (authReq.username === process.env.GUEST) {
+            return this.userService.addUser(username);
+        } else {
+            throw new HttpException(`You are already logged in`, 403);
+        }
     }
 
     async guest(): Promise<User> {
-        const guest = await this.userService.getUserByUsername(process.env.GUEST);
-        if (guest) {
-            return guest;
+        const guestName = process.env.GUEST;
+        const guest = await this.userService.existsByName(guestName);
+        if (guest.length) {
+            return guest[0];
         } else {
-            const newGuest = await this.userService.addUser(process.env.GUEST);
-            return newGuest;
+            return await this.userService.addUser(guestName);
         }
     }
 }

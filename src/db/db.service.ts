@@ -4,13 +4,17 @@ import { User } from './models/user.type';
 import { HistoryRepository } from './repositories/history.repository';
 import { UserRepository } from './repositories/user.repository';
 import { History } from './models/history.type';
+import { LikeRepository } from './repositories/like.repository';
+import { Like } from './models/like.type';
 
 @Injectable()
 export class DbService {
     private readonly store: DataStore = new DataStore('./store');
-    private userRepository: UserRepository = new UserRepository(this.store.collection<User>('users'));
-    private historyRepository: HistoryRepository = new HistoryRepository(this.store.collection<History>('history'));
-    constructor() {}
+    private readonly userRepository: UserRepository = new UserRepository(this.store.collection<User>('users'));
+    private readonly historyRepository: HistoryRepository = new HistoryRepository(
+        this.store.collection<History>('history'),
+    );
+    private readonly likeRepository: LikeRepository = new LikeRepository(this.store.collection<Like>('like'));
 
     getUserRepository() {
         return this.userRepository;
@@ -18,5 +22,9 @@ export class DbService {
 
     getHistoryRepository() {
         return this.historyRepository;
+    }
+
+    getLikeRepository() {
+        return this.likeRepository;
     }
 }
