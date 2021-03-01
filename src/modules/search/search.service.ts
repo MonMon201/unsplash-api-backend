@@ -33,7 +33,7 @@ export class SearchService {
         return this.addPhotosToHistory(userId, query, photos);
     }
 
-    async addPhotosToHistory(userId: string, query: string, photos: Photo[]){
+    async addPhotosToHistory(userId: string, query: string, photos: Photo[]) {
         const user = await this.userService.getUserByid(userId);
         const history = await this.historyService.addHistory(user, query, photos);
         return history.photos;
