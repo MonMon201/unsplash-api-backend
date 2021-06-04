@@ -14,7 +14,7 @@ export class HistoryRepository {
     }
 
     async getHistoryById(historyId: string): Promise<History> {
-        return await this.historyCollection.get(historyId);
+        return this.historyCollection.get(historyId);
     }
 
     async getUsersHistoriesByUsersId(userId: string): Promise<History[]> {
@@ -26,6 +26,6 @@ export class HistoryRepository {
     }
 
     async getAllHistory(): Promise<History[]> {
-        return await this.historyCollection.list();
+        return this.historyCollection.list();
     }
 }

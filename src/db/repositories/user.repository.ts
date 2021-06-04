@@ -20,6 +20,6 @@ export class UserRepository {
     }
 
     async existsByName(username: string): Promise<User[]> {
-        return await this.userCollection.list().filter((user) => user.username === username);
+        return this.userCollection.list().filter((user) => user.username === username);
     }
 }
