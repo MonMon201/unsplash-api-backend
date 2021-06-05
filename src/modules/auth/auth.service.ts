@@ -14,6 +14,7 @@ export class AuthService {
         if (!(username !== process.env.GUEST)) throw new HttpException(`Can't login as Guest`, 403);
 
         const user = await this.userService.getUserByUsername(username);
+        
         if (!user) throw new HttpException(`${username} doesn't exists.`, 401);
 
         return this.userService.getUserByUsername(username);
