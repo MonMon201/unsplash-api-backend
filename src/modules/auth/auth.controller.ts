@@ -6,15 +6,15 @@ import { AuthDto } from './dtos/auth.dto';
 export class AuthController {
     constructor(private authService: AuthService) {}
 
-    @Post('/login/:username')
-    async login(@Param('username') username: string, @Body() authReq: AuthDto): Promise<AuthDto> {
-        const user = await this.authService.authenticate(username, authReq);
+    @Post('/login')
+    async login(@Body() authReq: AuthDto): Promise<AuthDto> {
+        const user = await this.authService.authenticate(authReq);
         return AuthDto.from(user);
     }
 
-    @Post('/register/:username')
-    async register(@Param('username') username: string, @Body() authReq: AuthDto): Promise<AuthDto> {
-        const user = await this.authService.register(username, authReq);
+    @Post('/register')
+    async register(@Body() authReq: AuthDto): Promise<AuthDto> {
+        const user = await this.authService.register(authReq);
         return AuthDto.from(user);
     }
 

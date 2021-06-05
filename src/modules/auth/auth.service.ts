@@ -7,8 +7,9 @@ import { AuthDto } from './dtos/auth.dto';
 export class AuthService {
     constructor(private userService: UserService) {}
 
-    async authenticate(username: string, authReq: AuthDto): Promise<User> {
-        if (!(authReq.username === process.env.GUEST)) throw new HttpException(`You are already logged in`, 403);
+    async authenticate(authReq: AuthDto): Promise<User> {
+        const { username } = authReq;
+        if (!(username === process.env.GUEST)) throw new HttpException(`You are already logged in`, 403);
 
         if (!(username !== process.env.GUEST)) throw new HttpException(`Can't login as Guest`, 403);
 
@@ -18,8 +19,9 @@ export class AuthService {
         return this.userService.getUserByUsername(username);
     }
 
-    async register(username: string, authReq: AuthDto): Promise<User> {
-        if (!(authReq.username === process.env.GUEST)) throw new HttpException(`You are already logged in`, 403);
+    async register(authReq: AuthDto): Promise<User> {
+        const { username } = authReq;
+        if (!(username === process.env.GUEST)) throw new HttpException(`You are already logged in`, 403);
         return this.userService.addUser(username);
     }
 
