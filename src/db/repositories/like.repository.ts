@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Collection } from 'notarealdb';
-import { Like } from '../models/like.type';
+import { Like } from '../models/like.entity';
 
 @Injectable()
 export class LikeRepository {

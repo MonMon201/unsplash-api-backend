@@ -1,5 +1,5 @@
 import { Injectable, HttpException } from '@nestjs/common';
-import { User } from 'src/db/models/user.type';
+import { User } from 'src/db/models/user.entity';
 import { UserRepository } from 'src/db/repositories/user.repository';
 import { DbService } from '../../db/db.service';
 
@@ -16,7 +16,7 @@ export class UserService {
         if (user) {
             throw new HttpException(`Username ${username} is already in use.`, 409);
         }
-        
+
         return this.userRepository.addUser(username);
     }
 

@@ -1,4 +1,4 @@
-import { Like } from '../../../db/models/like.type';
+import { Like } from '../../../db/models/like.entity';
 
 export class LikeDto {
     id!: string;

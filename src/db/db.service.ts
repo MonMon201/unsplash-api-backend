@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { DataStore } from 'notarealdb';
-import { User } from './models/user.type';
+import { User } from './models/user.entity';
 import { HistoryRepository } from './repositories/history.repository';
 import { UserRepository } from './repositories/user.repository';
-import { History } from './models/history.type';
+import { History } from './models/history.entity';
 import { LikeRepository } from './repositories/like.repository';
-import { Like } from './models/like.type';
+import { Like } from './models/like.entity';
 
 @Injectable()
 export class DbService {

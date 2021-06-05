@@ -1,4 +1,4 @@
-import { User } from '../../../db/models/user.type';
+import { User } from '../../../db/models/user.entity';
 
 export class userDto implements User {
     id!: string;

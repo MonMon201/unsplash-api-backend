@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { DbService } from 'src/db/db.service';
-import { History } from 'src/db/models/history.type';
-import { User } from 'src/db/models/user.type';
+import { History } from 'src/db/models/history.entity';
+import { User } from 'src/db/models/user.entity';
 import { HistoryRepository } from 'src/db/repositories/history.repository';
 import { Photo } from '../search/entities/photo';
 

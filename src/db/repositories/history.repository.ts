@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { Collection } from 'notarealdb';
 import { Photo } from 'src/modules/search/entities/photo';
-import { History } from '../models/history.type';
-import { User } from '../models/user.type';
+import { History } from '../models/history.entity';
+import { User } from '../models/user.entity';
 
 @Injectable()
 export class HistoryRepository {

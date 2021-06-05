@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Collection } from 'notarealdb';
-import { User } from '../models/user.type';
+import { User } from '../models/user.entity';
 
 @Injectable()
 export class UserRepository {

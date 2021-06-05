@@ -1,4 +1,4 @@
-import { History } from '../../../db/models/history.type';
+import { History } from '../../../db/models/history.entity';
 
 export class HistoryDto {
     id!: string;

@@ -1,5 +1,5 @@
 import { HttpException, Injectable } from '@nestjs/common';
-import { User } from 'src/db/models/user.type';
+import { User } from 'src/db/models/user.entity';
 import { UserService } from '../user/user.service';
 import { AuthDto } from './dtos/auth.dto';
 
@@ -11,21 +11,23 @@ export class AuthService {
         const { username } = authReq;
 
         if (username === process.env.GUEST) {
-            throw new HttpException(`Can't login as Guest`, 403)
-        };
+            throw new HttpException(`Can't login as Guest`, 403);
+        }
 
         const user = await this.userService.getUserByUsername(username);
 
         if (!user) {
-            throw new HttpException(`${username} doesn't exists.`, 401)
-        };
+            throw new HttpException(`${username} doesn't exists.`, 401);
+        }
 
         return this.userService.getUserByUsername(username);
     }
 
     async register(authReq: AuthDto): Promise<User> {
         const { username } = authReq;
-        if (!(username === process.env.GUEST)) throw new HttpException(`You are already logged in`, 403);
+        if (username === process.env.GUEST) {
+            throw new HttpException(`Can't register as Guest`, 403);
+        }
         return this.userService.addUser(username);
     }
 
