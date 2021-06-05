@@ -1,4 +1,4 @@
-import { Photo } from 'src/modules/search/types/photo';
+import { Photo } from 'src/modules/search/entities/photo';
 
 export interface History {
     id: string;

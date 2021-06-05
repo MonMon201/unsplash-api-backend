@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Collection } from 'notarealdb';
-import { Photo } from 'src/modules/search/types/photo';
+import { Photo } from 'src/modules/search/entities/photo';
 import { History } from '../models/history.type';
 import { User } from '../models/user.type';
 

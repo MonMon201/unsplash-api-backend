@@ -1,4 +1,4 @@
-import { Photo } from '../types/photo';
+import { Photo } from '../entities/photo';
 
 export class PhotoDto {
     id!: string;

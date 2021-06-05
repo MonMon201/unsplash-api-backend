@@ -3,7 +3,7 @@ import { DbService } from 'src/db/db.service';
 import { History } from 'src/db/models/history.type';
 import { User } from 'src/db/models/user.type';
 import { HistoryRepository } from 'src/db/repositories/history.repository';
-import { Photo } from '../search/types/photo';
+import { Photo } from '../search/entities/photo';
 
 @Injectable()
 export class HistoryService {

@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { SearchController } from './search.controller';
 import { SearchService } from './search.service';
-import { UnsplashModule } from '../../unsplash/unsplash.module';
+import { UnsplashModule } from '../unsplash/unsplash.module';
 import { DbService } from 'src/db/db.service';
 import { DbModule } from 'src/db/db.module';
 import { HistoryService } from '../history/history.service';
