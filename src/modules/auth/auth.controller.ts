@@ -8,7 +8,7 @@ export class AuthController {
 
     @Post('/login')
     async login(@Body() authReq: AuthDto): Promise<AuthDto> {
-        const user = await this.authService.authenticate(authReq);
+        const user = await this.authService.login(authReq);
         return AuthDto.from(user);
     }
 

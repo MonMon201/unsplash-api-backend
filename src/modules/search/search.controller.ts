@@ -12,7 +12,7 @@ export class SearchController {
     async searchItem(@Param('userId') userId: string, @Body() searchReq: SearchQueryDto): Promise<PhotoDto[]> {
         const photos = await this.searchService.searchPhotos(userId, searchReq.query);
         const likes = await this.likeService.getLikesByUserId(userId);
-        const dtos = photos.map((photo) => PhotoDto.from(photo, !!(likes.filter((like) => like.photoId === photo.id)[0])))
+        const dtos = photos.map((photo) => PhotoDto.from(photo, !!(likes.find((like) => like.photoId === photo.id))))
         return dtos;
     }
 }

@@ -7,15 +7,18 @@ import { AuthDto } from './dtos/auth.dto';
 export class AuthService {
     constructor(private userService: UserService) {}
 
-    async authenticate(authReq: AuthDto): Promise<User> {
+    async login(authReq: AuthDto): Promise<User> {
         const { username } = authReq;
-        if (!(username === process.env.GUEST)) throw new HttpException(`You are already logged in`, 403);
 
-        if (!(username !== process.env.GUEST)) throw new HttpException(`Can't login as Guest`, 403);
+        if (username === process.env.GUEST) {
+            throw new HttpException(`Can't login as Guest`, 403)
+        };
 
         const user = await this.userService.getUserByUsername(username);
-        
-        if (!user) throw new HttpException(`${username} doesn't exists.`, 401);
+
+        if (!user) {
+            throw new HttpException(`${username} doesn't exists.`, 401)
+        };
 
         return this.userService.getUserByUsername(username);
     }
@@ -29,6 +32,6 @@ export class AuthService {
     async guest(): Promise<User> {
         const guestName = process.env.GUEST;
         const guest = await this.userService.existsByName(guestName);
-        return guest.length ? guest[0] : await this.userService.addUser(guestName);
+        return guest ? guest : this.userService.addUser(guestName);
     }
 }

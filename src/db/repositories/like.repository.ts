@@ -20,6 +20,6 @@ export class LikeRepository {
     }
 
     async getLikeByPhotoId(photoId: string): Promise<Like[]> {
-        return await this.likeCollection.list().filter((like) => like.photoId === photoId);
+        return this.likeCollection.list().filter((like) => like.photoId === photoId);
     }
 }

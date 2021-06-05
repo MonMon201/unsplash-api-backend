@@ -26,7 +26,6 @@ export class LikeService {
 
     async getLikeByPhotoId(userId: string, photoId: string): Promise<Like> {
         const likes = await this.likeRepository.getLikeByPhotoId(photoId);
-        const like = likes.filter((like) => like.userId === userId)[0];
-        return like;
+        return likes.find((like) => like.userId === userId);
     }
 }
