@@ -46,4 +46,17 @@ describe('History Controller', () => {
         const history = await historyController.getHistory(mockedUser);
         expect(history).toEqual(mockedResponse)
     })
+    it(`Should throw "Forbidden" error`, async () => {
+        const mockedUser: AuthDto = {
+            id: '',
+            username: ''
+        }
+        const mockGetUserByid = async (id: string) => undefined
+        jest.spyOn(userService, 'getUserByid').mockImplementation(mockGetUserByid)
+        try {
+            await historyController.getHistory(mockedUser);
+        } catch (e) {
+            expect(e.message).toEqual(`User with id ${mockedUser.id} does not exist`)
+        }
+    })
 })
