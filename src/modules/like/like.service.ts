@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { DbService } from 'src/db/db.service';
-import { Like } from 'src/db/models/like.entity';
+import { DbService } from '../../db/db.service';
+import { Like } from '../../db/models/like.entity';
 import { LikeRepository } from 'src/db/repositories/like.repository';
 
 @Injectable()

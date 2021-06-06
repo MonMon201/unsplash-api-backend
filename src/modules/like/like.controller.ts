@@ -19,7 +19,7 @@ export class LikeController {
             likeReq.userId,
             likeReq.photoId,
         );
-        if (!like) {
+        if (like) {
             throw new HttpException(
                 `Like is already on this photo`,
                 HttpStatus.FORBIDDEN,
