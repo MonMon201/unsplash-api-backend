@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param } from '@nestjs/common';
+import { Body, Controller, Get } from '@nestjs/common';
 import { AuthDto } from '../auth/dtos/auth.dto';
 import { HistoryDto } from './dtos/history.dto';
 import { HistoryService } from './history.service';

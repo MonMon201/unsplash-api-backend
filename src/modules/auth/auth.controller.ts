@@ -10,17 +10,13 @@ export class AuthController {
     @Post('/login')
     async login(@Body() authReq: AuthDto): Promise<AuthDto> {
         const { username } = authReq;
-
         if (username === process.env.GUEST) {
             throw new HttpException(`Can't login as Guest`, HttpStatus.FORBIDDEN);
         }
-
         const user = await this.userService.getUserByUsername(username);
-
         if (!user) {
             throw new HttpException(`${username} doesn't exists.`, HttpStatus.UNAUTHORIZED);
         }
-
         return AuthDto.from(user);
     }
 
@@ -30,15 +26,11 @@ export class AuthController {
         if (username === process.env.GUEST) {
             throw new HttpException(`Can't register as Guest`, HttpStatus.FORBIDDEN);
         }
-
         const user = await this.userService.getUserByUsername(authReq.username);
-
         if (user) {
             throw new HttpException(`Username ${username} is already in use.`, HttpStatus.CONFLICT);
         }
-
         const newUser = await this.userService.addUser(username);
-
         return AuthDto.from(newUser);
     }
 

@@ -13,13 +13,13 @@ export class SearchService {
         private readonly userService: UserService,
     ) {}
 
-    async searchPhotos (userId: string, query: string): Promise<SearchResult> {
+    async searchPhotos(userId: string, query: string): Promise<SearchResult> {
         const photosFromHistory = await this.searchPhotosInHistory(userId, query);
         if (photosFromHistory.length > 0) {
             return {
                 isSuccess: photosFromHistory.length > 0,
-                photos: photosFromHistory
-            }
+                photos: photosFromHistory,
+            };
         }
 
         const payload = await this.unsplashService.getPhotos(query);
@@ -30,9 +30,9 @@ export class SearchService {
                 isSuccess: payload.errors.length === 0,
                 error: {
                     code: payload.status,
-                    messages: payload.errors
-                }
-            }
+                    messages: payload.errors,
+                },
+            };
         }
 
         const photos = payload.response.results.map((photo) => {
@@ -42,12 +42,12 @@ export class SearchService {
                     regular: photo.urls.regular,
                 },
             };
-        })
+        });
 
         return {
             isSuccess: photos.length > 0,
             photos: photos,
-        }
+        };
     }
 
     async searchPhotosInHistory(userId: string, query: string): Promise<Photo[]> {

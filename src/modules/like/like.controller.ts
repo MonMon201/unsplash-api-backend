@@ -1,4 +1,4 @@
-import { Controller, Param, Body, Post, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Body, Post, HttpException, HttpStatus } from '@nestjs/common';
 import { LikeService } from './like.service';
 import { LikeRequest } from './dtos/like.request';
 import { LikeDto } from './dtos/like.dto';
