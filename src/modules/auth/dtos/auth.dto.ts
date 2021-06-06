@@ -1,6 +1,6 @@
 import { User } from '../../../db/models/user.entity';
 
-export class AuthDto implements User {
+export class AuthDto {
     id!: string;
     username!: string;
 
