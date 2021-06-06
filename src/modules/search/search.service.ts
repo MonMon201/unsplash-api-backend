@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { UnsplashService } from '../unsplash/unsplash.service';
 import { Photo } from './entities/photo';
 import { HistoryService } from '../history/history.service';

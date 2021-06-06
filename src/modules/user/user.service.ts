@@ -1,4 +1,4 @@
-import { Injectable, HttpException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { User } from 'src/db/models/user.entity';
 import { UserRepository } from 'src/db/repositories/user.repository';
 import { DbService } from '../../db/db.service';

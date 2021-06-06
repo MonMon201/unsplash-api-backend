@@ -12,7 +12,7 @@ export class SearchController {
     async searchItem(@Body() searchReq: SearchQueryDto): Promise<PhotoDto[]> {
         const { userId, query } = searchReq;
         if (query.length === 0) {
-            throw new HttpException(`Request is empty`, 400)
+            throw new HttpException(`Request is empty`, HttpStatus.BAD_REQUEST)
         };
         
         const searchResult = await this.searchService.searchPhotos(userId, query);
