@@ -7,7 +7,10 @@ export class LikeRepository {
     constructor(private readonly likeCollection: Collection<Like>) {}
 
     async addLike(userId: string, photoId: string): Promise<Like> {
-        const likeId = this.likeCollection.create({ userId, photoId });
+        const likeId = this.likeCollection.create({
+            userId,
+            photoId,
+        });
         return this.likeCollection.get(likeId);
     }
 

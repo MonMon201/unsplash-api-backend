@@ -7,7 +7,7 @@ export class AuthService {
     constructor(private readonly userService: UserService) {}
 
     async guest(): Promise<User> {
-        const guestName = process.env.GUEST || '';
+        const guestName = process.env.GUEST || 'Guest';
         const guest = await this.userService.getUserByUsername(guestName);
         return guest || this.userService.addUser(guestName);
     }

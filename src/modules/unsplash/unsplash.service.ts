@@ -12,10 +12,10 @@ export class UnsplashService {
     }
 
     async getPhotos(query: string) {
-        const photos = await this.getApi().search.getPhotos({
+        const maximumImagesPerPage = 30;
+        return this.getApi().search.getPhotos({
             query,
-            perPage: 30,
+            perPage: maximumImagesPerPage,
         });
-        return photos;
     }
 }

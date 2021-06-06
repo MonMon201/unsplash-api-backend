@@ -19,7 +19,7 @@ export class AuthController {
     @Post('/login')
     async login(@Body() authReq: AuthDto): Promise<AuthDto> {
         const { username } = authReq;
-        if (username === process.env.GUEST) {
+        if (username === (process.env.GUEST || 'Guest')) {
             throw new HttpException(
                 `Can't login as Guest`,
                 HttpStatus.FORBIDDEN,
