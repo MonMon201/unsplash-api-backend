@@ -8,7 +8,14 @@ import { AuthModule } from './modules/auth/auth.module';
 import { HistoryModule } from './modules/history/history.module';
 
 @Module({
-    imports: [SearchModule, UnsplashModule, UserModule, DbModule, AuthModule, HistoryModule],
+    imports: [
+        SearchModule,
+        UnsplashModule,
+        UserModule,
+        DbModule,
+        AuthModule,
+        HistoryModule,
+    ],
     controllers: [AppController],
     providers: [],
 })

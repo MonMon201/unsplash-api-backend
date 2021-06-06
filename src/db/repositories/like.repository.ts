@@ -16,10 +16,14 @@ export class LikeRepository {
     }
 
     async getLikesByUserId(userId: string): Promise<Like[]> {
-        return this.likeCollection.list().filter((like) => like.userId === userId);
+        return this.likeCollection
+            .list()
+            .filter((like) => like.userId === userId);
     }
 
     async getLikeByPhotoId(photoId: string): Promise<Like[]> {
-        return this.likeCollection.list().filter((like) => like.photoId === photoId);
+        return this.likeCollection
+            .list()
+            .filter((like) => like.photoId === photoId);
     }
 }

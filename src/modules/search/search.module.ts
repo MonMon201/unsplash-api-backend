@@ -13,6 +13,12 @@ import { LikeModule } from '../like/like.module';
 @Module({
     imports: [UnsplashModule, DbModule, HistoryModule, LikeModule],
     controllers: [SearchController],
-    providers: [SearchService, DbService, HistoryService, UserService, LikeService],
+    providers: [
+        SearchService,
+        DbService,
+        HistoryService,
+        UserService,
+        LikeService,
+    ],
 })
 export class SearchModule {}

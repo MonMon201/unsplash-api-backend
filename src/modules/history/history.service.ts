@@ -19,7 +19,8 @@ export class HistoryService {
 
     async getHistoryByQuery(query: string): Promise<History> {
         const usersHistories = await this.historyRepository.getAllHistory();
-        return usersHistories.find((history) => history.query === query);
+        const searchHistory = (h: History) => h.query === query;
+        return usersHistories.find(searchHistory);
     }
 
     async addHistory(user: User, query: string, photos: Photo[]) {

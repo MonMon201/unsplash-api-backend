@@ -16,6 +16,8 @@ export class UserRepository {
     }
 
     async getUserByUsername(username: string): Promise<User> {
-        return this.userCollection.list().find((user) => user.username === username);
+        return this.userCollection
+            .list()
+            .find((user) => user.username === username);
     }
 }

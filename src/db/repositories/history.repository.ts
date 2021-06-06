@@ -8,8 +8,17 @@ import { User } from '../models/user.entity';
 export class HistoryRepository {
     constructor(private readonly historyCollection: Collection<History>) {}
 
-    async addHistory(user: User, query: string, photos: Photo[]): Promise<History> {
-        const historyId = this.historyCollection.create({ userId: user.id, username: user.username, query, photos });
+    async addHistory(
+        user: User,
+        query: string,
+        photos: Photo[],
+    ): Promise<History> {
+        const historyId = this.historyCollection.create({
+            userId: user.id,
+            username: user.username,
+            query,
+            photos,
+        });
         return this.historyCollection.get(historyId);
     }
 
@@ -18,7 +27,9 @@ export class HistoryRepository {
     }
 
     async getUsersHistoriesByUsersId(userId: string): Promise<History[]> {
-        return this.historyCollection.list().filter((history) => history.userId === userId);
+        return this.historyCollection
+            .list()
+            .filter((history) => history.userId === userId);
     }
 
     async getAllHistory(): Promise<History[]> {
