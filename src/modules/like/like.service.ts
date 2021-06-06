@@ -12,8 +12,7 @@ export class LikeService {
     }
 
     async addLike(userId: string, photoId: string): Promise<Like> {
-        const like = await this.likeRepository.addLike(userId, photoId);
-        return like;
+        return this.likeRepository.addLike(userId, photoId);
     }
 
     async removeLike(likeId: string): Promise<void> {

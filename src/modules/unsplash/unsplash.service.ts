@@ -6,7 +6,7 @@ import { createApi } from 'unsplash-js';
 export class UnsplashService {
     getApi() {
         return createApi({
-            accessKey: process.env.ACCESS_KEY,
+            accessKey: process.env.ACCESS_KEY || '',
             fetch,
         });
     }

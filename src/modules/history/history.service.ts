@@ -14,8 +14,7 @@ export class HistoryService {
     }
 
     async getUsersHistoriesByUsersId(userId: string): Promise<History[]> {
-        const exists = await this.historyRepository.exists(userId);
-        return exists ? this.historyRepository.getUsersHistoriesByUsersId(userId) : [];
+        return this.historyRepository.getUsersHistoriesByUsersId(userId);
     }
 
     async getHistoryByQuery(query: string): Promise<History> {
@@ -24,7 +23,6 @@ export class HistoryService {
     }
 
     async addHistory(user: User, query: string, photos: Photo[]) {
-        const history = await this.historyRepository.addHistory(user, query, photos);
-        return history;
+        return this.historyRepository.addHistory(user, query, photos);
     }
 }

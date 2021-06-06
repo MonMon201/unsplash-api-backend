@@ -21,10 +21,6 @@ export class HistoryRepository {
         return this.historyCollection.list().filter((history) => history.userId === userId);
     }
 
-    async exists(userId: string): Promise<boolean> {
-        return !!(await this.getUsersHistoriesByUsersId(userId))[0];
-    }
-
     async getAllHistory(): Promise<History[]> {
         return this.historyCollection.list();
     }

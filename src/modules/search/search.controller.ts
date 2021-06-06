@@ -1,4 +1,4 @@
-import { Controller, Body, Post } from '@nestjs/common';
+import { Controller, Body, Post, HttpException, HttpStatus } from '@nestjs/common';
 import { LikeService } from '../like/like.service';
 import { PhotoDto } from './dtos/photo.dto';
 import { SearchQueryDto } from './dtos/search.query.dto';
@@ -10,9 +10,23 @@ export class SearchController {
 
     @Post('/')
     async searchItem(@Body() searchReq: SearchQueryDto): Promise<PhotoDto[]> {
-        const photos = await this.searchService.searchPhotos(searchReq.userId, searchReq.query);
-        const likes = await this.likeService.getLikesByUserId(searchReq.userId);
+        const { userId, query } = searchReq;
+        if (query.length === 0) {
+            throw new HttpException(`Request is empty`, 400)
+        };
+        
+        const searchResult = await this.searchService.searchPhotos(userId, query);
+
+        if (!searchResult.isSuccess) {
+            throw new HttpException(`Sorry, server error has occured`, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        const { photos } = searchResult
+
+        const likes = await this.likeService.getLikesByUserId(userId);
+
         const dtos = photos.map((photo) => PhotoDto.from(photo, !!likes.find((like) => like.photoId === photo.id)));
+        
         return dtos;
     }
 }

@@ -9,7 +9,8 @@ export class HistoryController {
 
     @Get('/')
     async getHistory(@Body() authReq: AuthDto): Promise<HistoryDto[]> {
-        const histories = await this.historyService.getUsersHistoriesByUsersId(authReq.id);
+        const { id } = authReq;
+        const histories = await this.historyService.getUsersHistoriesByUsersId(id);
         const dtos = histories.map((history) => HistoryDto.from(history));
         return dtos;
     }
