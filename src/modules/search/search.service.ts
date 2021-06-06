@@ -4,6 +4,7 @@ import { Photo } from './entities/photo';
 import { HistoryService } from '../history/history.service';
 import { UserService } from '../user/user.service';
 import { SearchResult } from './entities/searchResult';
+import { History } from 'src/db/models/history.entity';
 
 @Injectable()
 export class SearchService {
@@ -14,19 +15,15 @@ export class SearchService {
     ) {}
 
     async searchPhotos(userId: string, query: string): Promise<SearchResult> {
-        const photosFromHistory = await this.searchPhotosInHistory(
-            userId,
-            query,
-        );
-        if (photosFromHistory.length > 0) {
+        const history = await this.searchPhotosInHistory(userId);
+        if (history && history.photos.length > 0) {
             return {
-                isSuccess: photosFromHistory.length > 0,
-                photos: photosFromHistory,
+                isSuccess: history.photos.length > 0,
+                photos: history.photos,
             };
         }
-
         const payload = await this.unsplashService.getPhotos(query);
-
+        payload.response.results;
         if (payload.type === 'error') {
             console.log(
                 `Errors have occured: \n ${payload.errors} \n status: ${payload.status}`,
@@ -39,7 +36,6 @@ export class SearchService {
                 },
             };
         }
-
         const photos = payload.response.results.map((photo) => {
             return {
                 id: photo.id,
@@ -48,21 +44,15 @@ export class SearchService {
                 },
             };
         });
-
+        const newHistory = await this.addPhotosToHistory(userId, query, photos);
         return {
-            isSuccess: photos.length > 0,
-            photos: photos,
+            isSuccess: newHistory.photos.length > 0,
+            photos: newHistory.photos,
         };
     }
 
-    async searchPhotosInHistory(
-        userId: string,
-        query: string,
-    ): Promise<Photo[]> {
-        const history = await this.historyService.getHistoryByQuery(query);
-        return history
-            ? this.addPhotosToHistory(userId, query, history.photos)
-            : [];
+    async searchPhotosInHistory(query: string): Promise<History> {
+        return this.historyService.getHistoryByQuery(query);
     }
 
     async addPhotosToHistory(userId: string, query: string, photos: Photo[]) {
@@ -72,6 +62,6 @@ export class SearchService {
             query,
             photos,
         );
-        return history.photos;
+        return history;
     }
 }

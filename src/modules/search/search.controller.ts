@@ -6,6 +6,7 @@ import {
     HttpStatus,
 } from '@nestjs/common';
 import { LikeService } from '../like/like.service';
+import { UserService } from '../user/user.service';
 import { PhotoDto } from './dtos/photo.dto';
 import { SearchQueryDto } from './dtos/search.query.dto';
 import { SearchService } from './search.service';
@@ -15,6 +16,7 @@ export class SearchController {
     constructor(
         private searchService: SearchService,
         private likeService: LikeService,
+        private userService: UserService,
     ) {}
 
     @Post('/')
@@ -23,6 +25,13 @@ export class SearchController {
         searchReq: SearchQueryDto,
     ): Promise<PhotoDto[]> {
         const { userId, query } = searchReq;
+        const user = await this.userService.getUserByid(userId);
+        if (!user) {
+            throw new HttpException(
+                `User with id ${userId} does not exists`,
+                HttpStatus.FORBIDDEN,
+            );
+        }
         if (query.length === 0) {
             throw new HttpException(`Request is empty`, HttpStatus.BAD_REQUEST);
         }

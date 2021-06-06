@@ -38,7 +38,7 @@ export class AuthController {
     @Post('/register')
     async register(@Body() authReq: AuthDto): Promise<AuthDto> {
         const { username } = authReq;
-        if (username === process.env.GUEST) {
+        if (username === (process.env.GUEST || 'Guest')) {
             throw new HttpException(
                 `Can't register as Guest`,
                 HttpStatus.FORBIDDEN,
