@@ -9,8 +9,12 @@ export class LikeController {
 
     @Post('/addLike')
     async addLike(@Body() likeReq: LikeRequest): Promise<LikeDto> {
-        const like = await this.likeService.addLike(likeReq.userId, likeReq.photoId);
-        return LikeDto.from(like);
+        const like = await this.likeService.getLikeByPhotoId(likeReq.userId, likeReq.photoId);
+        if (!like) {
+            throw new HttpException(`Like is already on this photo`, 403);
+        }
+        const newLike = await this.likeService.addLike(likeReq.userId, likeReq.photoId);
+        return LikeDto.from(newLike);
     }
 
     @Post('/removeLike')
