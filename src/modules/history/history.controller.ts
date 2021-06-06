@@ -5,7 +5,7 @@ import { HistoryService } from './history.service';
 
 @Controller('history')
 export class HistoryController {
-    constructor(private historyService: HistoryService) {}
+    constructor(private readonly historyService: HistoryService) {}
 
     @Get('/')
     async getHistory(@Body() authReq: AuthDto): Promise<HistoryDto[]> {

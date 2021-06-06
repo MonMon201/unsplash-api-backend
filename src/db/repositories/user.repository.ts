@@ -4,7 +4,7 @@ import { User } from '../models/user.entity';
 
 @Injectable()
 export class UserRepository {
-    constructor(private userCollection: Collection<User>) {}
+    constructor(private readonly userCollection: Collection<User>) {}
 
     async addUser(username: string): Promise<User> {
         const id = this.userCollection.create({ username });

@@ -6,7 +6,7 @@ import { User } from '../models/user.entity';
 
 @Injectable()
 export class HistoryRepository {
-    constructor(private historyCollection: Collection<History>) {}
+    constructor(private readonly historyCollection: Collection<History>) {}
 
     async addHistory(user: User, query: string, photos: Photo[]): Promise<History> {
         const historyId = this.historyCollection.create({ userId: user.id, username: user.username, query, photos });

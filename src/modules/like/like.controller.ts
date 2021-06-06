@@ -5,7 +5,7 @@ import { LikeDto } from './dtos/like.dto';
 
 @Controller('like')
 export class LikeController {
-    constructor(private likeService: LikeService) {}
+    constructor(private readonly likeService: LikeService) {}
 
     @Post('/addLike')
     async addLike(@Body() likeReq: LikeRequest): Promise<LikeDto> {

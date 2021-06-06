@@ -4,7 +4,7 @@ import { Like } from '../models/like.entity';
 
 @Injectable()
 export class LikeRepository {
-    constructor(private likeCollection: Collection<Like>) {}
+    constructor(private readonly likeCollection: Collection<Like>) {}
 
     async addLike(userId: string, photoId: string): Promise<Like> {
         const likeId = this.likeCollection.create({ userId, photoId });

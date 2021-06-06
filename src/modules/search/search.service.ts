@@ -8,9 +8,9 @@ import { SearchResult } from './entities/searchResult';
 @Injectable()
 export class SearchService {
     constructor(
-        private unsplashService: UnsplashService,
-        private historyService: HistoryService,
-        private userService: UserService,
+        private readonly unsplashService: UnsplashService,
+        private readonly historyService: HistoryService,
+        private readonly userService: UserService,
     ) {}
 
     async searchPhotos (userId: string, query: string): Promise<SearchResult> {
