@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { DbService } from 'src/db/db.service';
-import { History } from 'src/db/models/history.entity';
-import { User } from 'src/db/models/user.entity';
-import { HistoryRepository } from 'src/db/repositories/history.repository';
+import { DbService } from '../../db/db.service';
+import { History } from '../../db/models/history.entity';
+import { User } from '../../db/models/user.entity';
+import { HistoryRepository } from '../../db/repositories/history.repository';
 import { Photo } from '../search/entities/photo';
 
 @Injectable()
 export class HistoryService {
     private historyRepository: HistoryRepository;
 
-    constructor(private dbService: DbService) {
+    constructor(private readonly dbService: DbService) {
         this.historyRepository = this.dbService.getHistoryRepository();
     }
 
