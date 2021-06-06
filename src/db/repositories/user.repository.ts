@@ -18,8 +18,4 @@ export class UserRepository {
     async getUserByUsername(username: string): Promise<User> {
         return this.userCollection.list().find((user) => user.username === username);
     }
-
-    async existsByName(username: string): Promise<User> {
-        return this.userCollection.list().find((user) => user.username === username);
-    }
 }
