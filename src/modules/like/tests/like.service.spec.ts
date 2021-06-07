@@ -5,13 +5,33 @@ import { LikeRepository } from '../../../db/repositories/like.repository';
 import { LikeService } from '../like.service';
 
 describe('Like Service', () => {
-    const userId = 'id';
-    const photoId = 'id';
     let store: DataStore;
     let collection: Collection<Like>;
     let likeRepository: LikeRepository;
     let dbService: DbService;
     let likeService: LikeService;
+    const userId = 'userId';
+    const photoId = 'photoId';
+    const mockLike: Like = {
+        id: '',
+        userId: '',
+        photoId: '',
+    };
+    const mockLikes: Like[] = [
+        {
+            id: '',
+            userId,
+            photoId,
+        },
+        {
+            id: '',
+            userId: 'fakeId',
+            photoId,
+        },
+    ];
+    const mockAddLike = async (userId: string, photoId: string) => mockLike;
+    const mockGetLikesByUserId = async (userId: string) => mockLikes;
+    const mockGetLikeByPhotoId = async (photoId: string) => mockLikes;
 
     beforeAll(() => {
         store = new DataStore('./store');
@@ -27,48 +47,20 @@ describe('Like Service', () => {
     });
 
     it(`Should add like`, async () => {
-        const userId = 'id';
-        const mockLike: Like = {
-            id: '',
-            userId: '',
-            photoId: '',
-        };
-        likeRepository.addLike = async (userId: string, photoId: string) =>
-            mockLike;
+        likeRepository.addLike = mockAddLike;
         const like = await likeService.addLike(userId, photoId);
         expect(like).toEqual(mockLike);
     });
 
     it(`Should get user's likes`, async () => {
-        const mockLike: Like[] = [
-            {
-                id: '',
-                userId: '',
-                photoId: '',
-            },
-        ];
-        likeRepository.getLikesByUserId = async (userId: string) => mockLike;
+        likeRepository.getLikesByUserId = mockGetLikesByUserId
         const likes = await likeService.getLikesByUserId(userId);
-        expect(likes).toEqual(mockLike);
+        expect(likes).toEqual(mockLikes);
     });
 
     it(`Should get a like by photo's id`, async () => {
-        const userId = 'userId';
-        const photoId = 'photoId';
-        const mockLike: Like[] = [
-            {
-                id: '',
-                userId,
-                photoId,
-            },
-            {
-                id: '',
-                userId: 'fakeId',
-                photoId,
-            },
-        ];
-        likeRepository.getLikeByPhotoId = async (photoId: string) => mockLike;
+        likeRepository.getLikeByPhotoId = mockGetLikeByPhotoId
         const likes = await likeService.getLikeByPhotoId(userId, photoId);
-        expect(likes).toEqual(mockLike[0]);
+        expect(likes).toEqual(mockLikes[0]);
     });
 });

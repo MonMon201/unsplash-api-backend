@@ -11,6 +11,37 @@ describe('History Service', () => {
     let historyRepository: HistoryRepository;
     let dbService: DbService;
     let historyService: HistoryService;
+    const query = 'query';
+    const mockHistories: History[] = [
+        {
+            id: '',
+            query,
+            photos: [],
+            username: '',
+            userId: '',
+        },
+        {
+            id: '',
+            query: '',
+            photos: [],
+            username: '',
+            userId: '',
+        },
+    ];
+    const mockHistory: History = {
+        id: '',
+        query: '',
+        photos: [],
+        username: '',
+        userId: '',
+    };
+    const mockedUser: User = {
+        id: '',
+        username: '',
+    };
+    const mockGetUsersHistoriesByUsersId = async (userId: string) => mockHistories;
+    const mockGetAllHistory = async () => mockHistories;
+    const mockAddHistory = async (user, query, photos) => mockHistory;
 
     beforeAll(() => {
         store = new DataStore('./store');
@@ -25,62 +56,24 @@ describe('History Service', () => {
         historyService = new HistoryService(dbService);
     });
     it(`Should find user's histories by user's id`, async () => {
-        const mock: History[] = [
-            {
-                id: '',
-                query: '',
-                photos: [],
-                username: '',
-                userId: '',
-            },
-        ];
-        historyRepository.getUsersHistoriesByUsersId = async (userId: string) =>
-            mock;
+        historyRepository.getUsersHistoriesByUsersId = mockGetUsersHistoriesByUsersId;
         const histories = await historyService.getUsersHistoriesByUsersId('id');
-        expect(histories).toEqual(mock);
+        expect(histories).toEqual(mockHistories);
     });
 
     it(`Should find user's history by user's query`, async () => {
-        const query = 'query';
-        const mock: History[] = [
-            {
-                id: '',
-                query,
-                photos: [],
-                username: '',
-                userId: '',
-            },
-            {
-                id: '',
-                query: '',
-                photos: [],
-                username: '',
-                userId: '',
-            },
-        ];
-        historyRepository.getAllHistory = async () => mock;
+        historyRepository.getAllHistory = mockGetAllHistory;
         const history = await historyService.getHistoryByQuery(query);
-        expect(history).toEqual(mock[0]);
+        expect(history).toEqual(mockHistories[0]);
     });
 
     it(`Should add user's history`, async () => {
-        const mockedUser: User = {
-            id: '',
-            username: '',
-        };
-        const mock: History = {
-            id: '',
-            query: '',
-            photos: [],
-            username: '',
-            userId: '',
-        };
-        historyRepository.addHistory = async (user, query, photos) => mock;
+        historyRepository.addHistory = mockAddHistory;
         const history = await historyService.addHistory(
             mockedUser,
-            mock.query,
-            mock.photos,
+            mockHistory.query,
+            mockHistory.photos,
         );
-        expect(history).toEqual(mock);
+        expect(history).toEqual(mockHistory);
     });
 });

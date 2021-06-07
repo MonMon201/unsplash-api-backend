@@ -10,108 +10,86 @@ describe('Auth controller', () => {
     let authService: AuthService;
     let userService: UserService;
     let authController: AuthController;
+    const mockInputUser: AuthDto = {
+        id: '',
+        username: 'User',
+    };
+    const mockInputGuest: AuthDto = {
+        id: '',
+        username: 'Guest',
+    };
+    const mockResponseUser: User = {
+        id: 'identifier',
+        username: 'User',
+    };
+    const errorTextDoesntExist = `${mockInputUser.username} doesn't exists.`;
+    const errorTextAlreadyInUse = `Username ${mockInputUser.username} is already in use.`;
+    const mockGetUserByUsername = async (username): Promise<User> => mockResponseUser;
+    const mockGetUserByUsernameEmpty = async (username) => undefined;
     beforeEach(() => {
         dbService = new DbService();
         userService = new UserService(dbService);
         authService = new AuthService(userService);
         authController = new AuthController(authService, userService);
     });
-    describe('login', () => {
+    describe('login endpoint', () => {
         it('should login users', async () => {
-            const mockInput: AuthDto = {
-                id: '',
-                username: 'User',
-            };
-            const mockResponse: User = {
-                id: 'identifier',
-                username: 'User',
-            };
-            const mockGetUserByUsername = async (username): Promise<User> =>
-                mockResponse;
             jest.spyOn(userService, 'getUserByUsername').mockImplementation(
                 mockGetUserByUsername,
             );
-            const response = await authController.login(mockInput);
-            expect(response).toEqual(mockResponse);
+            const response = await authController.login(mockInputUser);
+            expect(response).toEqual(mockResponseUser);
         });
 
         it('should not login users as guest', async () => {
-            const mockInput: AuthDto = {
-                id: '',
-                username: 'Guest',
-            };
             try {
-                await authController.login(mockInput);
+                await authController.login(mockInputGuest);
             } catch (e) {
                 expect(e.response).toEqual(`Can't login as Guest`);
             }
         });
 
         it('should not login users with unexisting names', async () => {
-            const mockInput: AuthDto = {
-                id: 'identifier',
-                username: 'User',
-            };
-            const errorText = `${mockInput.username} doesn't exists.`;
-            const mockGetUserByUsername = async (username) => undefined;
             jest.spyOn(userService, 'getUserByUsername').mockImplementation(
-                mockGetUserByUsername,
+                mockGetUserByUsernameEmpty,
             );
             try {
-                await authController.login(mockInput);
+                await authController.login(mockInputUser);
             } catch (e) {
-                expect(e.response).toEqual(errorText);
+                expect(e.response).toEqual(errorTextDoesntExist);
             }
         });
     });
 
-    describe('register', () => {
+    describe('register endpoint', () => {
         it('should register users', async () => {
-            const mockInput: AuthDto = {
-                id: '',
-                username: 'User',
-            };
-            const mockResponse: User = {
-                id: 'identifier',
-                username: 'User',
-            };
             const mockGetUserByUsername = async (username): Promise<User> =>
                 undefined;
-            const mockAddUser = async (username): Promise<User> => mockResponse;
+            const mockAddUser = async (username): Promise<User> => mockResponseUser;
             jest.spyOn(userService, 'getUserByUsername').mockImplementation(
                 mockGetUserByUsername,
             );
             jest.spyOn(userService, 'addUser').mockImplementation(mockAddUser);
-            const response = await authController.register(mockInput);
-            expect(response).toEqual(mockResponse);
+            const response = await authController.register(mockInputUser);
+            expect(response).toEqual(mockResponseUser);
         });
 
         it('should not register users as guest', async () => {
-            const mockInput: AuthDto = {
-                id: '',
-                username: 'Guest',
-            };
             try {
-                await authController.register(mockInput);
+                await authController.register(mockInputGuest);
             } catch (e) {
                 expect(e.response).toEqual(`Can't register as Guest`);
             }
         });
 
         it('should not register users with existing names', async () => {
-            const mockInput: AuthDto = {
-                id: 'identifier',
-                username: 'User',
-            };
-            const errorText = `Username ${mockInput.username} is already in use.`;
-            const mockGetUserByUsername = async (username) => mockInput;
             jest.spyOn(userService, 'getUserByUsername').mockImplementation(
                 mockGetUserByUsername,
             );
             try {
-                await authController.register(mockInput);
+                await authController.register(mockInputUser);
             } catch (e) {
-                expect(e.response).toEqual(errorText);
+                expect(e.response).toEqual(errorTextAlreadyInUse);
             }
         });
     });

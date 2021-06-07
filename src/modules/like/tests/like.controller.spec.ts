@@ -12,6 +12,31 @@ describe('Like Controller', () => {
     const userId = 'mockedid';
     const photoId = 'mockedid';
     const id = 'mockedid';
+    const mockLikeReq: LikeRequest = {
+        userId,
+        photoId,
+    };
+    const mockedResponse: Like = {
+        id,
+        userId,
+        photoId,
+    };
+    const mockedDto: LikeDto = {
+        id,
+        userId,
+        photoId,
+    };
+    const mockedGetLikeByPhotoId = async (
+        userId: string,
+        photoId: string,
+    ) => mockedResponse;
+    const mockedGetLikeByPhotoIdWithoutResponse = async (
+        userId: string,
+        photoId: string,
+    ) => undefined;
+    const mockedRemoveLike = async (likeId: string) => {};
+    const mockedAddLike = async (userId: string, photoId: string) =>
+        mockedResponse;
 
     beforeAll(() => {
         dbService = new DbService();
@@ -20,48 +45,15 @@ describe('Like Controller', () => {
     });
 
     it(`Should add a like`, async () => {
-        const mockLikeReq: LikeRequest = {
-            userId,
-            photoId,
-        };
-        const mockedResponse: Like = {
-            id,
-            userId,
-            photoId,
-        };
-        const mockedDto: LikeDto = {
-            id,
-            userId,
-            photoId,
-        };
-        const mockedGetLikeByPhotoId = async (
-            userId: string,
-            photoId: string,
-        ) => undefined;
         jest.spyOn(likeService, 'getLikeByPhotoId').mockImplementation(
-            mockedGetLikeByPhotoId,
+            mockedGetLikeByPhotoIdWithoutResponse,
         );
-        const mockedAddLike = async (userId: string, photoId: string) =>
-            mockedResponse;
         jest.spyOn(likeService, 'addLike').mockImplementation(mockedAddLike);
         const like = await likeController.addLike(mockLikeReq);
         expect(like).toEqual(mockedDto);
     });
 
     it(`Should throw a "Forbidden" error if try to add existing like`, async () => {
-        const mockLikeReq: LikeRequest = {
-            userId,
-            photoId,
-        };
-        const mockedResponse: Like = {
-            id,
-            userId,
-            photoId,
-        };
-        const mockedGetLikeByPhotoId = async (
-            userId: string,
-            photoId: string,
-        ) => mockedResponse;
         jest.spyOn(likeService, 'getLikeByPhotoId').mockImplementation(
             mockedGetLikeByPhotoId,
         );
@@ -73,28 +65,9 @@ describe('Like Controller', () => {
     });
 
     it(`Should remove a like`, async () => {
-        const mockLikeReq: LikeRequest = {
-            userId,
-            photoId,
-        };
-        const mockedResponse: Like = {
-            id,
-            userId,
-            photoId,
-        };
-        const mockedDto: LikeDto = {
-            id,
-            userId,
-            photoId,
-        };
-        const mockedGetLikeByPhotoId = async (
-            userId: string,
-            photoId: string,
-        ) => mockedResponse;
         jest.spyOn(likeService, 'getLikeByPhotoId').mockImplementation(
             mockedGetLikeByPhotoId,
         );
-        const mockedRemoveLike = async (likeId: string) => {};
         jest.spyOn(likeService, 'removeLike').mockImplementation(
             mockedRemoveLike,
         );
@@ -103,21 +76,8 @@ describe('Like Controller', () => {
     });
 
     it(`Should throw a "Forbidden" error if try to remove unexisting like`, async () => {
-        const mockLikeReq: LikeRequest = {
-            userId,
-            photoId,
-        };
-        const mockedDto: LikeDto = {
-            id,
-            userId,
-            photoId,
-        };
-        const mockedGetLikeByPhotoId = async (
-            userId: string,
-            photoId: string,
-        ) => undefined;
         jest.spyOn(likeService, 'getLikeByPhotoId').mockImplementation(
-            mockedGetLikeByPhotoId,
+            mockedGetLikeByPhotoIdWithoutResponse,
         );
         try {
             await likeController.removeLike(mockLikeReq);

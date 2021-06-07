@@ -11,6 +11,30 @@ describe('History Controller', () => {
     let historyService: HistoryService;
     let userService: UserService;
     let historyController: HistoryController;
+    const mockedUser: AuthDto = {
+        id: '',
+        username: '',
+    };
+    const mock: History[] = [
+        {
+            id: '',
+            query: '',
+            photos: [],
+            username: '',
+            userId: '',
+        },
+    ];
+    const mockedResponse: HistoryDto[] = [
+        {
+            id: '',
+            query: '',
+            username: '',
+            userId: '',
+        },
+    ];
+    const mockGetUserByid = async (id: string) => mockedUser;
+    const mockGetUserByidEmpty = async (id: string) => undefined;
+    const mockGetUsersHistoriesByUsersId = async (id: string) => mock;
     beforeEach(() => {
         dbService = new DbService();
         historyService = new HistoryService(dbService);
@@ -18,32 +42,9 @@ describe('History Controller', () => {
         historyController = new HistoryController(historyService, userService);
     });
     it('Should get history of a user', async () => {
-        const mockedUser: AuthDto = {
-            id: '',
-            username: '',
-        };
-        const mock: History[] = [
-            {
-                id: '',
-                query: '',
-                photos: [],
-                username: '',
-                userId: '',
-            },
-        ];
-        const mockedResponse: HistoryDto[] = [
-            {
-                id: '',
-                query: '',
-                username: '',
-                userId: '',
-            },
-        ];
-        const mockGetUserByid = async (id: string) => mockedUser;
         jest.spyOn(userService, 'getUserByid').mockImplementation(
             mockGetUserByid,
         );
-        const mockGetUsersHistoriesByUsersId = async (id: string) => mock;
         jest.spyOn(
             historyService,
             'getUsersHistoriesByUsersId',
@@ -52,13 +53,8 @@ describe('History Controller', () => {
         expect(history).toEqual(mockedResponse);
     });
     it(`Should throw "Forbidden" error`, async () => {
-        const mockedUser: AuthDto = {
-            id: '',
-            username: '',
-        };
-        const mockGetUserByid = async (id: string) => undefined;
         jest.spyOn(userService, 'getUserByid').mockImplementation(
-            mockGetUserByid,
+            mockGetUserByidEmpty,
         );
         try {
             await historyController.getHistory(mockedUser);

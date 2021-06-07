@@ -7,18 +7,18 @@ describe('Auth service', () => {
     let dbService: DbService;
     let authService: AuthService;
     let userService: UserService;
+    const mockResponse: User = {
+        id: 'identifier',
+        username: 'Guest',
+    };
+    const mockGetUserByUsername = async (username): Promise<User> =>
+        mockResponse;
     beforeEach(() => {
         dbService = new DbService();
         userService = new UserService(dbService);
         authService = new AuthService(userService);
     });
     it('should login guests', async () => {
-        const mockResponse: User = {
-            id: 'identifier',
-            username: 'Guest',
-        };
-        const mockGetUserByUsername = async (username): Promise<User> =>
-            mockResponse;
         jest.spyOn(userService, 'getUserByUsername').mockImplementation(
             mockGetUserByUsername,
         );
