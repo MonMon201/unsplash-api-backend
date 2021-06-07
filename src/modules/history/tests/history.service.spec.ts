@@ -39,7 +39,8 @@ describe('History Service', () => {
         id: '',
         username: '',
     };
-    const mockGetUsersHistoriesByUsersId = async (userId: string) => mockHistories;
+    const mockGetUsersHistoriesByUsersId = async (userId: string) =>
+        mockHistories;
     const mockGetAllHistory = async () => mockHistories;
     const mockAddHistory = async (user, query, photos) => mockHistory;
 

@@ -53,13 +53,13 @@ describe('Like Service', () => {
     });
 
     it(`Should get user's likes`, async () => {
-        likeRepository.getLikesByUserId = mockGetLikesByUserId
+        likeRepository.getLikesByUserId = mockGetLikesByUserId;
         const likes = await likeService.getLikesByUserId(userId);
         expect(likes).toEqual(mockLikes);
     });
 
     it(`Should get a like by photo's id`, async () => {
-        likeRepository.getLikeByPhotoId = mockGetLikeByPhotoId
+        likeRepository.getLikeByPhotoId = mockGetLikeByPhotoId;
         const likes = await likeService.getLikeByPhotoId(userId, photoId);
         expect(likes).toEqual(mockLikes[0]);
     });

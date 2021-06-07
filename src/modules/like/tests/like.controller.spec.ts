@@ -26,10 +26,8 @@ describe('Like Controller', () => {
         userId,
         photoId,
     };
-    const mockedGetLikeByPhotoId = async (
-        userId: string,
-        photoId: string,
-    ) => mockedResponse;
+    const mockedGetLikeByPhotoId = async (userId: string, photoId: string) =>
+        mockedResponse;
     const mockedGetLikeByPhotoIdWithoutResponse = async (
         userId: string,
         photoId: string,

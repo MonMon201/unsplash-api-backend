@@ -24,7 +24,8 @@ describe('Auth controller', () => {
     };
     const errorTextDoesntExist = `${mockInputUser.username} doesn't exists.`;
     const errorTextAlreadyInUse = `Username ${mockInputUser.username} is already in use.`;
-    const mockGetUserByUsername = async (username): Promise<User> => mockResponseUser;
+    const mockGetUserByUsername = async (username): Promise<User> =>
+        mockResponseUser;
     const mockGetUserByUsernameEmpty = async (username) => undefined;
     beforeEach(() => {
         dbService = new DbService();
@@ -65,7 +66,8 @@ describe('Auth controller', () => {
         it('should register users', async () => {
             const mockGetUserByUsername = async (username): Promise<User> =>
                 undefined;
-            const mockAddUser = async (username): Promise<User> => mockResponseUser;
+            const mockAddUser = async (username): Promise<User> =>
+                mockResponseUser;
             jest.spyOn(userService, 'getUserByUsername').mockImplementation(
                 mockGetUserByUsername,
             );

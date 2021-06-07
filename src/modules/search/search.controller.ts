@@ -25,15 +25,15 @@ export class SearchController {
         searchReq: SearchQueryDto,
     ): Promise<PhotoDto[]> {
         const { userId, query } = searchReq;
+        if (query.length === 0) {
+            throw new HttpException(`Request is empty`, HttpStatus.BAD_REQUEST);
+        }
         const user = await this.userService.getUserByid(userId);
         if (!user) {
             throw new HttpException(
-                `User with id ${userId} does not exists`,
+                `User with id ${userId} does not exist`,
                 HttpStatus.FORBIDDEN,
             );
-        }
-        if (query.length === 0) {
-            throw new HttpException(`Request is empty`, HttpStatus.BAD_REQUEST);
         }
         const searchResult = await this.searchService.searchPhotos(
             userId,
